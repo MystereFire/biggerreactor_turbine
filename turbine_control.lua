@@ -100,22 +100,28 @@ local timer = os.startTimer(1)
 while true do
   local event, p1, p2, p3 = os.pullEvent()
   if event == "timer" and p1 == timer then
+    monitor.setBackgroundColor(colors.black)
+    monitor.clear() -- << efface l'écran ici
+    drawButton()
     drawCards()
     timer = os.startTimer(1)
   elseif event == "monitor_touch" then
     local x, y = p2, p3
-    if y == 1 and x <= 7 then -- global button
+    if y == 1 and x <= 7 then
       toggleAll()
-      drawCards()
     else
       for _, t in ipairs(turbines) do
         if x >= t.x and x < t.x + cardWidth and y >= t.y and y < t.y + cardHeight then
           toggleTurbine(t)
-          drawCards()
           break
         end
       end
     end
+    monitor.setBackgroundColor(colors.black)
+    monitor.clear()
+    drawButton()
+    drawCards()
   end
 end
+
 
