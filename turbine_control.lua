@@ -32,7 +32,7 @@ for i, t in ipairs(turbines) do
   local row = math.floor((i-1) / perRow)
   t.x = col * (cardWidth + 2) + 1
   t.y = row * (cardHeight + 1) + 3 -- leave space for global button
-  t.auto = t.p.getActive() and t.p.getInductorEngaged()
+  t.auto = peripheral.call(t.name, "getActive") and peripheral.call(t.name, "getInductorEngaged")
 end
 
 local allState = false
