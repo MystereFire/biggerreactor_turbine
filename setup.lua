@@ -3,32 +3,43 @@
 
 local BASE_URL = "https://raw.githubusercontent.com/MystereFire/biggerreactor_turbine/main/"
 
-local function download(file)
-    local url = BASE_URL .. file
-    print("Downloading " .. file .. "...")
-    if not shell.run("wget", url, file) then
+local function download(remote, target)
+    target = target or remote
+    local url = BASE_URL .. remote
+    print("Downloading " .. remote .. " as " .. target .. "...")
+    if not shell.run("wget", url, target) then
         print("Failed to download: " .. url)
     else
-        print("Installed: " .. file)
+        print("Installed: " .. target)
     end
 end
 
+term.clear()
+term.setCursorPos(1, 1)
 print("Connection type? (wired/wireless)")
 local mode = read():lower()
+term.clear()
+term.setCursorPos(1, 1)
 
 if mode == "wired" or mode == "w" then
-    download("turbine_control.lua")
+    download("turbine_control.lua", "startup")
 elseif mode == "wireless" or mode == "wl" then
     print("Emitter or receiver? (e/r)")
     local role = read():lower()
+    term.clear()
+    term.setCursorPos(1, 1)
     if role == "e" or role == "emitter" then
-        download("sender.lua")
+        download("sender.lua", "startup")
     elseif role == "r" or role == "receiver" then
-        download("receiver.lua")
+        download("receiver.lua", "startup")
     else
         print("Invalid choice: " .. role)
     end
 else
     print("Unknown mode: " .. mode)
 end
+
+print("Rebooting...")
+sleep(1)
+os.reboot()
 
