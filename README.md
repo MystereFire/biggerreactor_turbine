@@ -1,10 +1,11 @@
 # biggerreactor_turbine
 
-Scripts pour contrôler des turbines Bigger Reactors avec ComputerCraft/CC:Tweaked.
+Scripts to control Bigger Reactors turbines with ComputerCraft/CC:Tweaked.
 
-## Fichiers
+## Files
 
-- `sender.lua` : à exécuter sur l'ordinateur connecté aux turbines via modem. Il envoie leur état.
-- `receiver.lua` : affiche l'état des turbines sur un écran distant et permet de les contrôler à distance.
-- `turbine_control.lua` : version câblée. À utiliser uniquement si les turbines sont reliées directement à l'ordinateur **sans modem**.
+- `sender.lua`: run on the computer connected to the turbines through a modem. It broadcasts their state.
+- `receiver.lua`: shows the turbine status on a remote screen and allows remote control.
+- `turbine_control.lua`: wired version. Use only when turbines are directly connected to the computer with no modem.
+- `setup.lua`: interactive script that downloads the correct program depending on the connection type (wired or wireless).
 
