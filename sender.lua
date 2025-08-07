@@ -54,6 +54,9 @@ local function toggleTurbine(t)
     pcall(function()
         t.p.setActive(t.auto)
         t.p.setCoilEngaged(t.auto)
+        if t.auto and t.p.setVentMode then
+            t.p.setVentMode('vent_all')
+        end
     end)
 end
 
@@ -64,6 +67,9 @@ local function toggleAll()
         pcall(function()
             t.p.setActive(allState)
             t.p.setCoilEngaged(allState)
+            if allState and t.p.setVentMode then
+                t.p.setVentMode('vent_all')
+            end
         end)
     end
 end
