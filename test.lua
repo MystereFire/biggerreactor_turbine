@@ -16,6 +16,10 @@ end
 local w, h = monitor.getSize()
 term.redirect(monitor)
 
+-- Paramètres du graphe d'historique
+local GRAPH_HEIGHT = math.max(1, math.min(6, h - 10))
+local pct_history  = {}
+
 -- Détecte tous les blockReaders (barrel)
 local readers = {}
 for _, name in ipairs(peripheral.getNames()) do
@@ -68,6 +72,19 @@ local function drawProgressBar(y, percent)
   end
 end
 
+-- Dessine l'historique du pourcentage de remplissage
+local function drawHistory(bottomY, height)
+  local margin = 2
+  local width  = w - margin * 2
+  for i = 1, #pct_history do
+    local v = pct_history[i]
+    local barH = math.floor(v * height + 0.5)
+    if barH > 0 then
+      paintutils.drawLine(margin + i - 1, bottomY, margin + i - 1, bottomY - barH + 1, colors.blue)
+    end
+  end
+end
+
 -- Variables pour calcul du débit
 local lastAmt = nil
 local lastTs  = nil
@@ -87,6 +104,13 @@ while true do
 
   local totalCap = #readers * MAX_PER_BARREL
   local pct      = totalAmt / totalCap
+
+  -- Met à jour l'historique de pourcentage
+  table.insert(pct_history, pct)
+  local histW = w - 4
+  if #pct_history > histW then
+    table.remove(pct_history, 1)
+  end
 
   -- Débit (mB/s) et temps restant (moyenne)
   local now = (os.epoch and os.epoch("utc") or (os.clock() * 1000))
@@ -136,6 +160,11 @@ while true do
   term.write(string.format("Stocke   : %d mB (%.2f%%)", totalAmt, pct * 100))
   term.setCursorPos(2, 7)
   term.write(string.format("Temps restant (moyenne) : %s", status_txt))
+
+  -- Historique du remplissage
+  if GRAPH_HEIGHT > 0 then
+    drawHistory(h - 5, GRAPH_HEIGHT)
+  end
 
   -- Barre de progression
   drawProgressBar(h - 3, pct)
