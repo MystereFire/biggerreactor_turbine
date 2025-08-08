@@ -1,3 +1,5 @@
+-- Utiliser ce script uniquement pour un contrôle en câblé des turbines.
+-- Si vous utilisez des modems, préférez le duo sender.lua/receiver.lua.
 local monitor = peripheral.find("monitor")
 if not monitor then
     error("No monitor found")
@@ -305,3 +307,4 @@ while true do
         end
     end
 end
+
