@@ -1,6 +1,6 @@
 -- CONFIGURATION
 local MAX_PER_BARREL  = 512000   -- capacité d'un barrel en mB
-local UPDATE_INTERVAL = 5        -- en secondes
+local UPDATE_INTERVAL = 1        -- en secondes
 
 -- Récupère le monitor et vérifie
 local monitor = peripheral.find("monitor")
