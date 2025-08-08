@@ -3,18 +3,22 @@ local MAX_PER_BARREL  = 512000   -- capacity of a barrel in mB
 local UPDATE_INTERVAL = 1        -- seconds
 local AVERAGE_SAMPLES = 10       -- number of samples to average
 
--- get monitor
-local monitor = peripheral.find("monitor")
-if not monitor then error("Aucun monitor trouve") end
+-- Prefer advanced monitors so we can display colours
+local monitor = peripheral.find("monitor", function(name, mon)
+  return mon and mon.isColor and mon.isColor()
+end)
+if not monitor then error("Aucun moniteur avance trouve") end
 
 -- adjust text scale
 if type(monitor.setTextScale) == "function" then
   monitor.setTextScale(0.5)
 end
 
--- screen size
 local w, h = monitor.getSize()
 term.redirect(monitor)
+term.setBackgroundColor(colors.black)
+term.setTextColor(colors.white)
+term.clear()
 
 -- detect all block readers
 local readers = {}
