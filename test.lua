@@ -1,6 +1,6 @@
 -- CONFIGURATION
 local MAX_PER_BARREL  = 512000   -- capacité d'un barrel en mB
-local UPDATE_INTERVAL = 5        -- en secondes
+local UPDATE_INTERVAL = 1        -- en secondes
 local AVERAGE_SAMPLES = 10       -- nombre de mesures à moyenner
 
 -- Récupère le monitor et vérifie
